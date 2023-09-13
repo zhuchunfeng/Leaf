@@ -92,7 +92,7 @@ public class SnowflakeRedisHolder {
         Set<String> keys = jedis.keys(heartbeatKey+":*");
         for (String key : keys) {
             String[] split = key.split(":");
-            String nodeWorkId = split[keyLength + 1];
+            String nodeWorkId = split[keyLength];
             nodesWorkIds.add(nodeWorkId);
         }
         return nodesWorkIds;
