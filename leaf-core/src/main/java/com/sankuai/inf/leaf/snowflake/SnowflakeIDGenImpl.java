@@ -31,22 +31,24 @@ public class SnowflakeIDGenImpl implements IDGen {
     private long lastTimestamp = -1L;
     private static final Random RANDOM = new Random();
 
-    public SnowflakeIDGenImpl(String zkAddress, int port) {
+    public SnowflakeIDGenImpl(String redisIp, int redisPort, String redisPassword, int serverPort) {
         //Thu Nov 04 2010 09:42:54 GMT+0800 (中国标准时间) 
-        this(zkAddress, port, 1288834974657L);
+        this(redisIp, redisPort, redisPassword, serverPort, 1288834974657L);
     }
 
     /**
-     * @param zkAddress zk地址
-     * @param port      snowflake监听端口
+     * @param redisIp   redis ip地址
+     * @param redisPort redis端口
      * @param twepoch   起始的时间戳
      */
-    public SnowflakeIDGenImpl(String zkAddress, int port, long twepoch) {
+    public SnowflakeIDGenImpl(String redisIp, int redisPort, String redisPassword, int serverPort, long twepoch) {
         this.twepoch = twepoch;
         Preconditions.checkArgument(timeGen() > twepoch, "Snowflake not support twepoch gt currentTime");
+
+        //本地机器ip
         final String ip = Utils.getIp();
-        SnowflakeZookeeperHolder holder = new SnowflakeZookeeperHolder(ip, String.valueOf(port), zkAddress);
-        LOGGER.info("twepoch:{} ,ip:{} ,zkAddress:{} port:{}", twepoch, ip, zkAddress, port);
+        SnowflakeRedisHolder holder = new SnowflakeRedisHolder(ip, serverPort, redisIp, redisPort, redisPassword);
+        LOGGER.info("twepoch:{} ,ip:{} ,redisIp:{} redisPort:{}", twepoch, ip, redisIp, redisPort);
         boolean initFlag = holder.init();
         if (initFlag) {
             workerId = holder.getWorkerID();

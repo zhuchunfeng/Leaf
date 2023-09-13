@@ -47,6 +47,11 @@
             <version>${jackson-databind.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
         <!-- test scope -->
         <dependency>
             <groupId>org.springframework</groupId>

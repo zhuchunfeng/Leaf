@@ -23,10 +23,16 @@ public class SnowflakeService {
         Properties properties = PropertyFactory.getProperties();
         boolean flag = Boolean.parseBoolean(properties.getProperty(Constants.LEAF_SNOWFLAKE_ENABLE, "true"));
         if (flag) {
-            String zkAddress = properties.getProperty(Constants.LEAF_SNOWFLAKE_ZK_ADDRESS);
+
             int port = Integer.parseInt(properties.getProperty(Constants.LEAF_SNOWFLAKE_PORT));
-            idGen = new SnowflakeIDGenImpl(zkAddress, port);
-            if(idGen.init()) {
+
+            String redisIp = properties.getProperty(Constants.LEAF_REDIS_IP);
+            int redisPort = Integer.parseInt(properties.getProperty(Constants.LEAF_REDIS_PORT));
+            String redisPassword = properties.getProperty(Constants.LEAF_REDIS_PASSWORD);
+
+            idGen = new SnowflakeIDGenImpl(redisIp, redisPort, redisPassword, port);
+
+            if (idGen.init()) {
                 logger.info("Snowflake Service Init Successfully");
             } else {
                 throw new InitException("Snowflake Service Init Fail");
