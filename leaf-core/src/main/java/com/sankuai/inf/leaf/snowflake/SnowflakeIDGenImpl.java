@@ -52,7 +52,7 @@ public class SnowflakeIDGenImpl implements IDGen {
         boolean initFlag = holder.init();
         if (initFlag) {
             workerId = holder.getWorkerID();
-            LOGGER.info("START SUCCESS USE ZK WORKERID-{}", workerId);
+            LOGGER.info("START SUCCESS USE REDIS WORKERID-{}", workerId);
         } else {
             Preconditions.checkArgument(initFlag, "Snowflake Id Gen is not init ok");
         }

@@ -4,11 +4,8 @@ import com.sankuai.inf.leaf.IDGen;
 import com.sankuai.inf.leaf.common.PropertyFactory;
 import com.sankuai.inf.leaf.common.Result;
 import org.junit.Test;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.ScanResult;
 
 import java.util.Properties;
-import java.util.Set;
 
 public class SnowflakeIDGenImplTest {
 
